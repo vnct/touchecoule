@@ -16,7 +16,7 @@ public class Desk extends JPanel{
 		}
 	}
 	public GridDisplay getAdversaire() {
-		return adversaire;
+		return adversaire; 	
 	}
 	public void setAdversaire(GridDisplay adversaire) {
 		if(this.adversaire==null)

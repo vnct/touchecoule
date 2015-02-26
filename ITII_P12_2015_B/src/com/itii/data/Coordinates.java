@@ -9,5 +9,11 @@ public class Coordinates {
 		X = x;
 		Y = y;
 	}
+	public Integer getX() {
+		return X;
+	}
+	public Integer getY() {
+		return Y;
+	}
 	
 }
