@@ -7,6 +7,8 @@ import java.awt.event.MouseMotionListener;
 
 import javax.swing.JPanel;
 
+import com.itii.data.Coordinates;
+
 public class GridDisplay extends JPanel implements MouseListener,
 		MouseMotionListener {
 
@@ -19,13 +21,22 @@ public class GridDisplay extends JPanel implements MouseListener,
 		this.gridSize = gridSize;
 		this.player = player;
 		this.squares = new Square[gridSize + 1][gridSize + 1];
+		initializeGrid();
+		
 	}
 
+	public void initializeGrid()
+	{
+		for (int y = 0; y < getSquares().length; y++) {
+			for (int x = 0; x < getSquares()[y].length; x++) {
+				getSquares()[y][x]=new Square(new Coordinates(y, x));
+			}
+		}
+	}
 
 
 	@Override
 	public void paint(Graphics g) {
-		// TODO Auto-generated method stub
 		super.paint(g);
 		// Display the grid itself. 
 		final int squareEdgeSize= Math.min( ( getWidth() / (getSquares().length + 1) ) , ( getHeight() / (getSquares()[0].length + 1 ) ));
