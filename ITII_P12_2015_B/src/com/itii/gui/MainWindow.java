@@ -12,8 +12,14 @@ public class MainWindow extends JFrame{
 	{
 		if(instance==null)
 		{
-	
-				instance=new MainWindow();
+			
+	            synchronized(MainWindow.class) {
+	              if (instance == null) {
+	                instance = new MainWindow();
+	              }
+	            }
+	       
+	  
 			
 					
 		}
