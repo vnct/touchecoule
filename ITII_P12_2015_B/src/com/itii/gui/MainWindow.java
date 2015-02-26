@@ -1,5 +1,8 @@
 package com.itii.gui;
 
+import java.awt.BorderLayout;
+import java.awt.Component;
+
 import javax.swing.JFrame;
 
 public class MainWindow extends JFrame{
@@ -33,8 +36,17 @@ public class MainWindow extends JFrame{
 	{
 		this.setSize(300, 300);
 		this.setVisible(true);
+		this.getContentPane().add(getDesk());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		validate();
 		repaint();
+	}
+	public Component getDesk()
+	{
+		setLayout(new BorderLayout());
+		add("Center", new GameMenu());
+		
+		Desk desk = new Desk(new GridDisplay(10, true), new GridDisplay(10, false));
+		return desk;
 	}
 }

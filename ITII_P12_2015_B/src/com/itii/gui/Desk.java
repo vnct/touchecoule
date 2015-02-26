@@ -1,11 +1,23 @@
 package com.itii.gui;
 
+import java.awt.BorderLayout;
+
 import javax.swing.JPanel;
 
 public class Desk extends JPanel{
 
 	private GridDisplay joueur;
 	private GridDisplay adversaire;
+	private GameMenu gameMenu;
+
+	
+	public Desk(GridDisplay joueur, GridDisplay adversaire) {
+		super();
+		setJoueur(joueur);
+		setAdversaire(adversaire);
+		
+		
+	}
 	public GridDisplay getJoueur() {
 		return joueur;
 	}
