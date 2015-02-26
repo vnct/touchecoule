@@ -14,7 +14,7 @@ public class GridDisplay extends JPanel implements MouseListener,
 
 	private Integer gridSize;
 	private Boolean player;
-	private Square[][] squares;
+	private final Square[][] squares;
 
 	public GridDisplay(Integer gridSize, Boolean player) {
 		super();
@@ -29,6 +29,7 @@ public class GridDisplay extends JPanel implements MouseListener,
 	{
 		for (int y = 0; y < getSquares().length; y++) {
 			for (int x = 0; x < getSquares()[y].length; x++) {
+				
 				getSquares()[y][x]=new Square(new Coordinates(y, x));
 			}
 		}
@@ -42,7 +43,8 @@ public class GridDisplay extends JPanel implements MouseListener,
 		final int squareEdgeSize= Math.min( ( getWidth() / (getSquares().length + 1) ) , ( getHeight() / (getSquares()[0].length + 1 ) ));
 		for (int y = 0; y < getSquares().length; y++) {
 			for (int x = 0; x < getSquares()[y].length; x++) {
-				getSquares()[y][x].paintSquare(g, squareEdgeSize);
+				
+				getSquares()[y][x].paintSquare(g, squareEdgeSize);// ici on gère la taille des cases
 			}
 		}
 	}

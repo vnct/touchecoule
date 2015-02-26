@@ -1,9 +1,6 @@
 package com.itii.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
 
-import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 
 public class MainWindow extends JFrame{

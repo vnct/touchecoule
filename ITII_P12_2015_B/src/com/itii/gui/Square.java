@@ -17,8 +17,21 @@ public class Square extends JComponent{
 	}
 	public void paintSquare(Graphics g,Integer size)
 	{
-		g.fillRect(coordinates.getX(), coordinates.getY(), size, size);
-		g.setColor(Color.BLUE);
+		Color color;
+		if(coordinates.getX()==coordinates.getY())
+		{
+			color = Color.BLUE;
+		}
+		else
+		{
+			color = Color.RED;
+		}
+		
+		g.setColor(color);
+	
+		g.fillRect(coordinates.getX()*size, coordinates.getY()*size, size, size);
+		
+		
 		
 		
 	}
