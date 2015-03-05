@@ -87,6 +87,7 @@ public class GameMenu extends JPanel implements ActionListener {
 		add(restartButton);
 		add(quitButton);
 	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub

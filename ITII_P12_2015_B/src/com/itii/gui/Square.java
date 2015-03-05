@@ -2,6 +2,7 @@ package com.itii.gui;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.lang.Thread.State;
 
 import javax.swing.JComponent;
 
@@ -12,48 +13,64 @@ public class Square extends JComponent{
 
 
 	protected Coordinates coordinates;
-	private StateEnum squareState;
+	private StateEnum squareState =StateEnum.EMPTY;
+	private StateEnum squaretemporaryState ;
 	public Square(Coordinates coor) {
 		super();
+	
 		coordinates = coor;
+	
 	}
 	public void paintSquare(Graphics g,Integer size)
 	{
-		Color color;
-		if(coordinates.getX()==coordinates.getY())
-		{
-			color = Color.BLUE;
+	
+		switch (getSquareState()) {
+		case EMPTY:
+			g.setColor(Color.BLUE);
+			g.fillRect(coordinates.getX() * size, coordinates.getY() * size, size,size);
+			break;
+		case BOAT:
+			g.setColor(Color.BLACK);
+			g.fillRect(coordinates.getX() * size, coordinates.getY() * size, size,size);
+			break;
+		default:
+			break;
 		}
-		else
-		{
-			color = Color.RED;
-		}
-		g.setColor(color);
-		g.fillRect(coordinates.getX() * size, coordinates.getY() * size, size,
-				size);
+		
 	}
 
 	public final void setTemporaryState(final StateEnum temporarySquareState) {
-		this.setSquareState(temporarySquareState);
+		this.setSquaretemporaryState(temporarySquareState);
 	}
 
 	public final void freeTemporaryState() {
-		setSquareState(null);
+		setSquaretemporaryState(null);
 	}
 	public StateEnum getSquareState() {
-		return squareState;
+		return squaretemporaryState != null   
+				? squaretemporaryState    
+				: squareState; 
 	}
-	public void setSquareState(StateEnum squareState) {
-		this.squareState = squareState;
-	}
+
 	public Boolean isFree() 
 	{
+		boolean isFree=false;
 		switch (getSquareState()) {
 		case BOAT:
 			return false;
-		default:
+		case EMPTY:
 			return true;
+		case PLACING_BOAT:
+			return true;
+		default:
+			return false;
 		}
+	}
+	public StateEnum getSquaretemporaryState() {
+		return squaretemporaryState;
+	}
+	public void setSquaretemporaryState(StateEnum squaretemporaryState) {
+		this.squaretemporaryState = squaretemporaryState;
 	}
 
 }

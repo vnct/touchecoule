@@ -28,6 +28,7 @@ public class GridDisplay extends JPanel implements MouseListener,
 		this.player = player;
 		this.squares = new Square[gridSize + 1][gridSize + 1];
 		initializeGrid();
+		setGridDisplayEnabled(true);
 
 	}
 
@@ -148,7 +149,20 @@ public class GridDisplay extends JPanel implements MouseListener,
 		yLocation = Math.min(yLocation, getSquares().length - 1);
 		return squares[yLocation][xLocation];
 	}
-
+	public void setGridDisplayEnabled(Boolean enable)
+	{
+		if(enable)
+		{
+			addMouseMotionListener(this) ;
+			addMouseListener(this) ;
+		}
+		else
+		{
+			removeMouseListener(this);
+			removeMouseMotionListener(this);
+		}
+	}
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
