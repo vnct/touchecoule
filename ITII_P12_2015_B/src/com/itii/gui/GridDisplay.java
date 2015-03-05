@@ -1,13 +1,18 @@
 package com.itii.gui;
 
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.EventObject;
 
 import javax.swing.JPanel;
 
+import com.itii.data.Boat;
 import com.itii.data.Coordinates;
+import com.itii.data.State;
+import com.itii.data.State.StateEnum;
 
 public class GridDisplay extends JPanel implements MouseListener,
 		MouseMotionListener {
@@ -15,6 +20,7 @@ public class GridDisplay extends JPanel implements MouseListener,
 	private Integer gridSize;
 	private Boolean player;
 	private final Square[][] squares;
+
 
 	public GridDisplay(Integer gridSize, Boolean player) {
 		super();
@@ -46,7 +52,19 @@ public class GridDisplay extends JPanel implements MouseListener,
 		}
 	}
 
-
+	public void freeAllTemporarySquareState() 
+	{
+		for (int y = 1; y < getSquares().length; y++) {
+			for (int x = 1; x < getSquares()[y].length; x++) {
+				
+				//getSquares()[y][x]
+			}
+		}
+	}
+	public void freeTemporaryState()
+	{
+		
+	}
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
@@ -67,10 +85,31 @@ public class GridDisplay extends JPanel implements MouseListener,
 	}
 
 	@Override
-	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
+	public void mouseMoved(MouseEvent mouseEvent) {
+		GridDisplay gridDisplay= (GridDisplay) mouseEvent.getSource();
+		Boat boatBeingAdded= (Boat) MainWindow.getInstance().getDesk().getGameMenu().getBoatComboBox().getSelectedItem();
+		Square squareDisplayingBoat= (Square)(gridDisplay.getComponentAt( mouseEvent.getPoint() ));
+		updateSquareDependingOnBoatSelected( squareDisplayingBoat, boatBeingAdded, State.StateEnum.PLACING_BOAT, true );
+		repaint();
 
 	}
+
+	private void updateSquareDependingOnBoatSelected(
+			Square squareDisplayingBoat, Boat boatBeingAdded,
+			StateEnum placingBoat, boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public Component getComponentAt ( final int x, final int y )
+	{  
+		int xLocation=  (int) ( ( (float)x / gridSize ) * getSquares()[0].length );   
+		int yLocation=  (int) ( ( (float)y / gridSize ) * getSquares().length );         
+		xLocation =  Math.min( xLocation, getSquares()[0].length - 1 );   
+		yLocation =  Math.min( yLocation, getSquares().length - 1 );  
+	    return squares[yLocation][xLocation];
+	   }
+
 
 	@Override
 	public void mouseClicked(MouseEvent e) {

@@ -46,6 +46,9 @@ public class Desk extends JPanel{
 			this.adversaire=adversaire;
 		}
 	}
+	public GameMenu getGameMenu() {
+		return gameMenu;
+	}
 	
 	
 }

@@ -80,13 +80,16 @@ public class GameMenu extends JPanel implements ActionListener {
 	}
 	
 
-	public JComboBox<Boat> getjComboBox() {
-		return boatComboBox ;
+
+	public JComboBox<Boat> getBoatComboBox() {
+		return boatComboBox;
 	}
 
-	public void setjComboBox(JComboBox<Boat> jComboBox) {
-		this.boatComboBox  = jComboBox;
+
+	public void setBoatComboBox(JComboBox<Boat> boatComboBox) {
+		this.boatComboBox = boatComboBox;
 	}
+
 
 	public JLabel getBoatAvailableLabel() {
 		return boatAvailableLabel;
@@ -151,6 +154,8 @@ public class GameMenu extends JPanel implements ActionListener {
 	public void setQuitButton(JButton quitButton) {
 		this.quitButton = quitButton;
 	}
+
+
 
 	
 }
