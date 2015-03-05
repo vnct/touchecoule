@@ -26,13 +26,7 @@ public class Square extends JComponent{
 		{
 			color = Color.RED;
 		}
-		
 		g.setColor(color);
-	
 		g.fillRect(coordinates.getX()*size, coordinates.getY()*size, size, size);
-		
-		
-		
-		
 	}
 }
