@@ -5,7 +5,7 @@ import com.itii.data.Boat;
 public class AircraftCarrier extends Boat{
 
 	@Override
-	public Integer getSize() {
+	public Integer getLength() {
 		return 5;
 	}
 
@@ -14,5 +14,7 @@ public class AircraftCarrier extends Boat{
 		// TODO Auto-generated method stub
 		return Boat.Boats.AIRCRAFT_CARRIER;
 	}
+
+
 
 }

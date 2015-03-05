@@ -5,7 +5,7 @@ import com.itii.data.Boat.Boats;
 
 public class Cruiser  extends Boat{
 	@Override
-	public Integer getSize() {
+	public Integer getLength() {
 		return 3;
 	}
 

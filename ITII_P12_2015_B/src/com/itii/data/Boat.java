@@ -12,11 +12,15 @@ public abstract class Boat {
 		  CRUISER,    
 		  DESTROYER;
 	};
-	public abstract Integer getSize();
+	public abstract Integer getLength();
 	public abstract Boats getBoatType();
 	@Override
 	public String toString() {
 		
-		return getBoatType().name();
+		return getBoatType().name() + " [" +getLength() +"]";
+	}
+	public Integer getCenter()
+	{
+		return getLength()/2;
 	}
 }

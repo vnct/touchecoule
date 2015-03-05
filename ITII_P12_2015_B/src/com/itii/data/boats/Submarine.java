@@ -6,7 +6,7 @@ import com.itii.data.Boat.Boats;
 public class Submarine  extends Boat{
 	
 	@Override
-	public Integer getSize() {
+	public Integer getLength() {
 		return 3;
 	}
 
