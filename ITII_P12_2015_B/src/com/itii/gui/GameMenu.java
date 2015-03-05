@@ -2,6 +2,7 @@ package com.itii.gui;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -51,18 +52,31 @@ public class GameMenu extends JPanel implements ActionListener {
 		}
 	
 	}
-	
+	public void initializeName()
+	{
+		boatAvailableLabel.setText("Bateau Disponible");
+		rotateBoatButton.setText("Rotation 90°");
+		readyButton.setText("Prêt");
+		joinButton.setText("Joindre");
+		hitButton.setText("Attaquer");
+		surrenderButton.setText("Abandonner");
+		restartButton.setText("Redémarrer");
+		quitButton.setText("Quitter");
+	}
 
 	public GameMenu() {
 		super();
-		setBackground(Color.black);
+		setBackground(Color.white);
 		initializejComboBox();
+		initializeName();
 		initialize();
 		
 	}
 
 	public void initialize()
 	{
+		GridLayout layout = new GridLayout(9, 0);
+		this.setLayout(layout);
 		add(boatComboBox);
 		add(boatAvailableLabel);
 		add(rotateBoatButton);
