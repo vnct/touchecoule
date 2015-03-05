@@ -33,6 +33,10 @@ public class Square extends JComponent{
 			g.setColor(Color.BLACK);
 			g.fillRect(coordinates.getX() * size, coordinates.getY() * size, size,size);
 			break;
+		case PLACING_BOAT:
+			g.setColor(Color.YELLOW);
+			g.fillRect(coordinates.getX() * size, coordinates.getY() * size, size,size);
+			break;
 		default:
 			break;
 		}
