@@ -10,7 +10,7 @@ import com.itii.data.Coordinates;
 public class Square extends JComponent{
 
 
-	private Coordinates coordinates;
+	protected Coordinates coordinates;
 	public Square(Coordinates coor) {
 		super();
 		coordinates = coor;

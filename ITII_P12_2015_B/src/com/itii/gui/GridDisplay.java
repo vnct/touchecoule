@@ -29,8 +29,19 @@ public class GridDisplay extends JPanel implements MouseListener,
 	{
 		for (int y = 0; y < getSquares().length; y++) {
 			for (int x = 0; x < getSquares()[y].length; x++) {
+				if(y==0)
+				{
+					getSquares()[y][x]=new SurroundingSquare(new Coordinates(y, x));
+				}
+				else if(x==0)
+				{
+					getSquares()[y][x]=new SurroundingSquare(new Coordinates(y, x));
+				}
+				else
+				{
+					getSquares()[y][x]=new Square(new Coordinates(y, x));
+				}
 				
-				getSquares()[y][x]=new Square(new Coordinates(y, x));
 			}
 		}
 	}

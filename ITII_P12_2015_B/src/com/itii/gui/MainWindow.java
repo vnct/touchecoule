@@ -32,7 +32,8 @@ public class MainWindow extends JFrame{
 	}
 	private void initialize()
 	{
-		this.setSize(300, 300);
+		this.setSize(1300, 600);
+		this.setResizable(false);
 		this.setVisible(true);
 		this.getContentPane().add( getDesk() );
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
