@@ -69,6 +69,10 @@ public class Square extends JComponent{
 	public final void freeTemporaryState() {
 		setSquaretemporaryState(null);
 	}
+	 /**
+	  * Fonction qui permet
+	  * @return
+ 	  */
 	public StateEnum getSquareState() {
 		return squaretemporaryState != null   
 				? squaretemporaryState    
@@ -93,7 +97,7 @@ public class Square extends JComponent{
 			isFree =  false;
 			break;
 		}
-		System.out.println(isFree);
+		//System.out.println(isFree);
 		return isFree;
 	}
 	public StateEnum getSquaretemporaryState() {

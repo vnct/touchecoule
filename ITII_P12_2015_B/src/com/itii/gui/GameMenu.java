@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import com.itii.data.Boat;
 import com.itii.data.Boat.Boats;
@@ -22,6 +23,8 @@ import com.itii.data.boats.Submarine;
 
 public class GameMenu extends JPanel implements ActionListener {
 
+	private static final String ACTION_ROTATE_BOAT_BUTTON = "ACTION_ROTATE_BOAT_BUTTON";
+	private static final String ACTION_QUIT_BUTTON = "ACTION_QUIT_BUTTON";
 	private JComboBox<Boat> boatComboBox ;
 	private JLabel boatAvailableLabel  = new JLabel();
 	private JButton rotateBoatButton = new JButton();
@@ -31,6 +34,7 @@ public class GameMenu extends JPanel implements ActionListener {
 	private JButton surrenderButton = new JButton();
 	private JButton restartButton = new JButton();
 	private JButton quitButton = new JButton();
+	private ActionEvent actionEvent;
 	
 	public void initializejComboBox()
 	{
@@ -56,13 +60,18 @@ public class GameMenu extends JPanel implements ActionListener {
 	{
 		boatAvailableLabel.setText("Bateau Disponible");
 		rotateBoatButton.setText("Rotation 90°");
+		rotateBoatButton.setActionCommand(ACTION_ROTATE_BOAT_BUTTON);
+		rotateBoatButton.addActionListener(this);
 		readyButton.setText("Prêt");
 		joinButton.setText("Joindre");
 		hitButton.setText("Attaquer");
 		surrenderButton.setText("Abandonner");
 		restartButton.setText("Redémarrer");
 		quitButton.setText("Quitter");
+		quitButton.setActionCommand(ACTION_QUIT_BUTTON);
+		quitButton.addActionListener(this);
 	}
+
 
 	public GameMenu() {
 		super();
@@ -89,9 +98,25 @@ public class GameMenu extends JPanel implements ActionListener {
 	}
 	
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+	public void actionPerformed(ActionEvent pactionEvent) {
+		actionEvent = pactionEvent;
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				if (ACTION_ROTATE_BOAT_BUTTON.equals(actionEvent.getActionCommand())) {
+					if(getBoatComboBox().getItemCount()!=0)
+					{
+						Boat boat_placing = (Boat) getBoatComboBox().getSelectedItem();
+						boat_placing.flipOrientation();
+					}
+					
+				}
+				if (ACTION_QUIT_BUTTON.equals(actionEvent.getActionCommand())) {
+					System.exit(0);
+				}
+			}
+		});
+
 	}
 	
 

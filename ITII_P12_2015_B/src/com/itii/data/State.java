@@ -7,5 +7,9 @@ public class State {
 		EMPTY,   
 		BOAT
 	};
+	public enum BoatOrientation{
+		HORIZONTAL,
+		VERTICAL
+	};
 
 }

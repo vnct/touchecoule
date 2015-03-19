@@ -20,7 +20,7 @@ public class GridDisplay extends JPanel implements MouseListener,
 
 	private Integer gridSize;
 	private Boolean player;
-	private Integer squareEdgeSize=0;
+	private Integer squareEdgeSize = 0;
 	private final Square[][] squares;
 
 	public GridDisplay(Integer gridSize, Boolean player) {
@@ -29,8 +29,8 @@ public class GridDisplay extends JPanel implements MouseListener,
 		this.player = player;
 		this.squares = new Square[gridSize + 1][gridSize + 1];
 		initializeGrid();
-		if(player)
-		setGridDisplayEnabled(true);
+		if (player)
+			setGridDisplayEnabled(true);
 
 	}
 
@@ -64,10 +64,9 @@ public class GridDisplay extends JPanel implements MouseListener,
 	public void paint(Graphics g) {
 		super.paint(g);
 		// Display the grid itself.
-		squareEdgeSize = Math.min(
-				(getWidth() / (getSquares().length + 1)),
+		squareEdgeSize = Math.min((getWidth() / (getSquares().length + 1)),
 				(getHeight() / (getSquares()[0].length + 1)));
-		
+
 		for (int y = 0; y < getSquares().length; y++) {
 			for (int x = 0; x < getSquares()[y].length; x++) {
 				getSquares()[y][x].paintSquare(g, squareEdgeSize);// ici on gère
@@ -86,117 +85,152 @@ public class GridDisplay extends JPanel implements MouseListener,
 	@Override
 	public void mouseMoved(MouseEvent mouseEvent) {
 		GridDisplay gridDisplay = (GridDisplay) mouseEvent.getSource();
-		Boat boatBeingAdded = (Boat) MainWindow.getInstance().getDesk()
-				.getGameMenu().getBoatComboBox().getSelectedItem();
+		try{
+			Boat boatBeingAdded = (Boat) MainWindow.getInstance().getDesk()
+					.getGameMenu().getBoatComboBox().getSelectedItem();
+
+			Square squareDisplayingBoat = (Square) (gridDisplay
+					.getComponentAt(mouseEvent.getPoint()));
+			// System.out.println(MainWindow.getInstance().getDesk().getGameMenu().getBoatComboBox().getSelectedItem());
+			updateSquareDependingOnBoatSelected(squareDisplayingBoat,
+					boatBeingAdded, State.StateEnum.PLACING_BOAT, true);
+		}
+		catch(Exception e)
+		{
+			
+		}
 		
 		
-		Square squareDisplayingBoat = (Square) (gridDisplay
-				.getComponentAt(mouseEvent.getPoint()));
-		//System.out.println(MainWindow.getInstance().getDesk().getGameMenu().getBoatComboBox().getSelectedItem());
-		updateSquareDependingOnBoatSelected(squareDisplayingBoat,
-				boatBeingAdded, State.StateEnum.PLACING_BOAT, true);
 		repaint();
 
 	}
 
 	private boolean updateSquareDependingOnBoatSelected(
 			final Square squareDisplayingBoat, final Boat boatBeingAdded,
-			final StateEnum state, final boolean isTemporary ) 
-	{
-		
+			final StateEnum state, final boolean isTemporary) {
+
 		ArrayList<Square> listOfSquareToUpdate = new ArrayList<Square>();
 		Boolean isFreeSquare = true;
-		final int numberOfSquaresOnX= squares[0].length; 
-		final int currenXPosition=    squareDisplayingBoat.getPositionX();   
-		final int boatSize=           boatBeingAdded.getLength();  
-		final int boatCenter=         boatBeingAdded.getCenter();  
-		final int boatRightEdgePosition = currenXPosition
-				+ (boatSize - boatCenter);
-		final int boatLeftEdgePosition =currenXPosition
-				- boatCenter;
-		int startingXPosition = boatLeftEdgePosition;
+		Boolean boatPlaced = false;
+
+		final int boatSize = boatBeingAdded.getLength();
+		final int boatCenter = boatBeingAdded.getCenter();
 		freeAllTemporarySquareState();
-		if (boatRightEdgePosition >= numberOfSquaresOnX
-				|| boatLeftEdgePosition < 1) { // As the boat is crossing the
-												// limit of the grid we shift it
-												// inside the grid
-			startingXPosition = boatRightEdgePosition >= numberOfSquaresOnX ? (numberOfSquaresOnX - boatSize)
-					: 1;
-		}             
-		for (int x = 0; x < boatSize; x++) {
-			final Square squareForTmpBoatPlacing = getSquares()[squareDisplayingBoat
-					.getPositionY()][startingXPosition + x];
-			System.out.println(squareForTmpBoatPlacing.getPositionX());
-			System.out.println(squareForTmpBoatPlacing.getPositionY());
-			System.out.println(squareForTmpBoatPlacing.isFree());
+		switch (boatBeingAdded.getBoatOrientation()) {
+		case VERTICAL:
+			final int numberOfSquaresOnX = squares[0].length;
 			
-			if (!squareForTmpBoatPlacing.isFree()) {
-				isFreeSquare = false;
+			final int currentXPosition = squareDisplayingBoat.getPositionX();
+		
+			
+			final int boatRightEdgePosition = currentXPosition
+					+ (boatSize - boatCenter);
+			final int boatLeftEdgePosition = currentXPosition - boatCenter;
+			
+			int startingXPosition = boatLeftEdgePosition;
+			if (boatRightEdgePosition >= numberOfSquaresOnX
+					|| boatLeftEdgePosition < 1) { // As the boat is crossing
+													// the
+													// limit of the grid we
+													// shift it
+													// inside the grid
+				startingXPosition = boatRightEdgePosition >= numberOfSquaresOnX ? (numberOfSquaresOnX - boatSize)
+						: 1;
 			}
-			listOfSquareToUpdate.add(squareForTmpBoatPlacing);
-		} // Verify if the boat could be added to the current position.
+			for (int x = 0; x < boatSize; x++) {
+				final Square squareForTmpBoatPlacing = getSquares()[squareDisplayingBoat
+						.getPositionY()][startingXPosition + x];
+				// System.out.println(squareForTmpBoatPlacing.getPositionX());
+				// System.out.println(squareForTmpBoatPlacing.getPositionY());
+				// System.out.println(squareForTmpBoatPlacing.isFree());
+
+				if (!squareForTmpBoatPlacing.isFree()) {
+					isFreeSquare = false;
+				}
+				listOfSquareToUpdate.add(squareForTmpBoatPlacing);
+			}
+			break;
+
+		case HORIZONTAL:
+			final int numberOfSquaresOnY = squares.length;
+			
+			final int currentYPosition = squareDisplayingBoat.getPositionY();
+		
+			final int boatUpEdgePosition = currentYPosition
+					+ (boatSize - boatCenter);
+			final int boatBottomEdgePosition = currentYPosition - boatCenter;
+			
+			int startingYPosition = boatBottomEdgePosition;
+			if (boatUpEdgePosition >= numberOfSquaresOnY
+					|| boatBottomEdgePosition < 1) { // As the boat is crossing
+													// the
+													// limit of the grid we
+													// shift it
+													// inside the grid
+				startingYPosition = boatUpEdgePosition >= numberOfSquaresOnY ? (numberOfSquaresOnY - boatSize)
+						: 1;
+			}
+			for (int x = 0; x < boatSize; x++) {
+				final Square squareForTmpBoatPlacing = getSquares()[startingYPosition + x]
+						[squareDisplayingBoat.getPositionX()];
+				
+				if (!squareForTmpBoatPlacing.isFree()) {
+					isFreeSquare = false;
+				}
+				listOfSquareToUpdate.add(squareForTmpBoatPlacing);
+			}
+
+		}
+
+		// Verify if the boat could be added to the current position.
 		// It must not have any boat already on this square
+
 	
-		System.out.println("isFreeSquare " + isFreeSquare);
-		StateEnum state1 = isFreeSquare
-				? state 
-				: State.StateEnum.FORBIDDEN;
-		System.out.println("state " + state);
+		StateEnum state1 = isFreeSquare ? state : State.StateEnum.FORBIDDEN;
 	
+
 		for (Square square : listOfSquareToUpdate) {
 			if (isTemporary) {
-				
+
 				square.setTemporaryState(state1);
-			}
-			else if (!isTemporary && isFreeSquare)
-			{
+			} else if (!isTemporary && isFreeSquare) {
+				
 				square.setSquareState(state1);
+				Boat.setPlaceGrid(true);
+				boatPlaced = true;
 			}
 		}
-		
-		return isFreeSquare;
-}	
+
+		return boatPlaced;
+	}
 
 	@Override
 	public Component getComponentAt(final int x, final int y) {
-		//int xLocation = (int) (((float) x / gridSize) * getSquares()[0].length);
-		//int yLocation = (int) (((float) y / gridSize) * getSquares().length);
+		// int xLocation = (int) (((float) x / gridSize) *
+		// getSquares()[0].length);
+		// int yLocation = (int) (((float) y / gridSize) * getSquares().length);
 
 		int xLocation = (int) ((float) x / squareEdgeSize);
 		int yLocation = (int) ((float) y / squareEdgeSize);
-	
+
 		xLocation = Math.min(xLocation, getSquares()[0].length - 1);
 		yLocation = Math.min(yLocation, getSquares().length - 1);
-	 return getSquares()[yLocation][xLocation];
-		//return squares[yLocation][xLocation];
+		return getSquares()[yLocation][xLocation];
+		// return squares[yLocation][xLocation];
 	}
-	public void setGridDisplayEnabled(Boolean enable)
-	{
-		if(enable)
-		{
-			addMouseMotionListener(this) ;
-			addMouseListener(this) ;
-		}
-		else
-		{
+
+	public void setGridDisplayEnabled(Boolean enable) {
+		if (enable) {
+			addMouseMotionListener(this);
+			addMouseListener(this);
+		} else {
 			removeMouseListener(this);
 			removeMouseMotionListener(this);
 		}
 	}
-	
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		GridDisplay gridDisplay = (GridDisplay) e.getSource();
-		Boat boatBeingAdded = (Boat) MainWindow.getInstance().getDesk()
-				.getGameMenu().getBoatComboBox().getSelectedItem();
-		
-
-		Square squareDisplayingBoat = (Square) (gridDisplay
-				.getComponentAt(e.getPoint()));
-		
-		updateSquareDependingOnBoatSelected(squareDisplayingBoat,
-				boatBeingAdded, State.StateEnum.BOAT, false);
-		repaint();
 
 	}
 
@@ -220,7 +254,29 @@ public class GridDisplay extends JPanel implements MouseListener,
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
+		try{
+			GridDisplay gridDisplay = (GridDisplay) e.getSource();
+			Boat boatBeingAdded = (Boat) MainWindow.getInstance().getDesk()
+					.getGameMenu().getBoatComboBox().getSelectedItem();
+
+			Square squareDisplayingBoat = (Square) (gridDisplay.getComponentAt(e
+					.getPoint()));
+
+			Boolean boatplaced = updateSquareDependingOnBoatSelected(squareDisplayingBoat,
+					boatBeingAdded, State.StateEnum.BOAT, false);
+			if(boatplaced)
+			{
+				Integer positionselected = MainWindow.getInstance().getDesk().getGameMenu().getBoatComboBox().getSelectedIndex();
+				MainWindow.getInstance().getDesk().getGameMenu().getBoatComboBox().removeItemAt(positionselected);
+				
+			}
+		}
+		catch(Exception exception)
+		{
+			
+		}
+		
+		repaint();
 
 	}
 
