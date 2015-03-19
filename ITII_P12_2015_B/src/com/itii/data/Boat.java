@@ -40,13 +40,10 @@ public abstract class Boat {
 	}
 	public final void flipOrientation()
 	{
-		
-		
 		setBoatOrientation(getBoatOrientation() == BoatOrientation.HORIZONTAL 
 				? BoatOrientation.VERTICAL
 				: BoatOrientation.HORIZONTAL
 				);
-		
 		
 	}
 

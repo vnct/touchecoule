@@ -12,7 +12,6 @@ public class Battleship  extends Boat
 
 	@Override
 	public Boats getBoatType() {
-		// TODO Auto-generated method stub
 		return Boat.Boats.BATTLESHIP;
 	}
 }

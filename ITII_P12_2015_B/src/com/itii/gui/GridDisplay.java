@@ -104,7 +104,15 @@ public class GridDisplay extends JPanel implements MouseListener,
 		repaint();
 
 	}
-
+	/**
+	 * Fonction qui permet pour une case donnée de regarder autour et de déterminer si on peut ou non placer le bateau en fonction si les cases sont vides ou remplies. 
+	 * 
+	 * @param squareDisplayingBoat : Square où se trouve l'emplacement de la souris. Endroit où nous souhaitons placer notre Bateau
+	 * @param boatBeingAdded : Type de notre Bateau, on va surtout s'interesser à la taille
+	 * @param state : Etat si nous voulons juste faire l'action de déplacer le bateau ou le placer. 
+	 * @param isTemporary : Si temporaire on ne sauvegarde pas l'état. 
+	 * @return Retourne si nous avons réussi ou non à placer un bateau
+	 */
 	private boolean updateSquareDependingOnBoatSelected(
 			final Square squareDisplayingBoat, final Boat boatBeingAdded,
 			final StateEnum state, final boolean isTemporary) {

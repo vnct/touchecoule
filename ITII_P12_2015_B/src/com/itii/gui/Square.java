@@ -70,8 +70,8 @@ public class Square extends JComponent{
 		setSquaretemporaryState(null);
 	}
 	 /**
-	  * Fonction qui permet
-	  * @return
+	  * Fonction qui permet de récuperer l'état de la case. 
+	  * @return StateEnum, état de la case (Vide, présence Bateau, etc..)
  	  */
 	public StateEnum getSquareState() {
 		return squaretemporaryState != null   
