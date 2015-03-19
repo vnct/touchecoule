@@ -8,6 +8,7 @@ public class MainWindow extends JFrame{
 	private static final long serialVersionUID = 7440673678966475194L;
 
 	private static MainWindow instance;
+	private Desk desk;
 	
 	public static MainWindow getInstance()
 	{
@@ -42,7 +43,10 @@ public class MainWindow extends JFrame{
 	}
 	public Desk getDesk()
 	{
-		Desk desk = new Desk(new GridDisplay(10, true), new GridDisplay(10, false));
+		if(desk==null)
+		{
+			desk = new Desk(new GridDisplay(10, true), new GridDisplay(10, false));
+		}
 		return desk;
 	}
 }

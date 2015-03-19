@@ -97,6 +97,7 @@ public class GameMenu extends JPanel implements ActionListener {
 
 
 	public JComboBox<Boat> getBoatComboBox() {
+		
 		return boatComboBox;
 	}
 
